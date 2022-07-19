@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("br.com.onboarding.anime.application.presentation.controlle"))
+            .apis(RequestHandlerSelectors.basePackage("br.com.onboarding.anime.application.presentation.controller"))
             .paths(PathSelectors.any())
             .build();
     }

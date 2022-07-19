@@ -2,6 +2,8 @@ package br.com.onboarding.anime.application.mapper;
 
 import br.com.onboarding.anime.application.presentation.representation.AnimeRequestRepresentation;
 import br.com.onboarding.anime.application.presentation.representation.AnimeResponseRepresentation;
+import br.com.onboarding.anime.application.repository.jpa.AnimeJpa;
+import br.com.onboarding.anime.application.repository.jpa.entity.AnimeEntity;
 import br.com.onboarding.anime.domain.domain.Anime;
 import lombok.experimental.UtilityClass;
 import org.apache.logging.log4j.util.Supplier;
@@ -18,5 +20,13 @@ public class AnimeMapper {
 
     public AnimeResponseRepresentation paraRepresentacao(Anime anime){
         return modelMapperSupplier.get().map(anime, AnimeResponseRepresentation.class);
+    }
+
+    public AnimeEntity paraEntity(Anime anime) {
+        return modelMapperSupplier.get().map(anime, AnimeEntity.class);
+    }
+
+    public Anime entityParaDominio(AnimeEntity entity) {
+        return modelMapperSupplier.get().map(entity, Anime.class);
     }
 }
