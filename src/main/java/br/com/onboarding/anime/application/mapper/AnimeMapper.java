@@ -2,7 +2,6 @@ package br.com.onboarding.anime.application.mapper;
 
 import br.com.onboarding.anime.application.presentation.representation.AnimeRequestRepresentation;
 import br.com.onboarding.anime.application.presentation.representation.AnimeResponseRepresentation;
-import br.com.onboarding.anime.application.repository.jpa.AnimeJpa;
 import br.com.onboarding.anime.application.repository.jpa.entity.AnimeEntity;
 import br.com.onboarding.anime.domain.domain.Anime;
 import lombok.experimental.UtilityClass;
@@ -12,7 +11,7 @@ import org.modelmapper.ModelMapper;
 @UtilityClass
 public class AnimeMapper {
 
-    private Supplier<ModelMapper> modelMapperSupplier = ModelMapper::new;
+    private final Supplier<ModelMapper> modelMapperSupplier = ModelMapper::new;
 
     public Anime paraDominio(AnimeRequestRepresentation representation) {
         return modelMapperSupplier.get().map(representation, Anime.class);
@@ -29,4 +28,5 @@ public class AnimeMapper {
     public Anime entityParaDominio(AnimeEntity entity) {
         return modelMapperSupplier.get().map(entity, Anime.class);
     }
+
 }
