@@ -22,4 +22,13 @@ public class AnimeService {
         }
     }
 
+    public Anime buscarPorId(Long id) {
+        try {
+            return this.animeRepository.buscarPorId(id);
+        } catch (Exception e) {
+            log.error("Erro ao tentar buscar o Anime. Por id: {}", id, e);
+            throw e;
+        }
+    }
+
 }

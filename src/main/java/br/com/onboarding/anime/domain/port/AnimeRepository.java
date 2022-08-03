@@ -6,4 +6,6 @@ public interface AnimeRepository {
 
     Anime salvar(Anime anime);
 
+    Anime buscarPorId(Long id);
+
 }

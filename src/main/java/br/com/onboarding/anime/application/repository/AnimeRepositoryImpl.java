@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ public class AnimeRepositoryImpl implements AnimeRepository {
 
     private final AnimeJpa animeJpa;
 
+    @Transactional(rollbackOn = Exception.class)
     @Override
     public Anime salvar(Anime anime) {
         try {
@@ -25,4 +28,19 @@ public class AnimeRepositoryImpl implements AnimeRepository {
             throw e;
         }
     }
+
+    @Override
+    public Anime buscarPorId(Long id) {
+        try {
+            var animeEntity = animeJpa.findById(id);
+            if(animeEntity.isPresent()) {
+                return AnimeMapper.entityParaDominio(animeEntity.get());
+            }
+        } catch (Exception e) {
+            log.error("Erro ao tentar buscar o anime. Por Id: {}", id, e);
+            throw e;
+        }
+        return Anime.builder().build();
+    }
+
 }
