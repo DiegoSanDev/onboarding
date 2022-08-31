@@ -1,9 +1,7 @@
 package br.com.onboarding.anime.application.presentation.controller;
 
-import br.com.onboarding.anime.application.mapper.AnimeMapper;
 import br.com.onboarding.anime.application.presentation.representation.AnimeRequestRepresentation;
 import br.com.onboarding.anime.application.presentation.representation.AnimeResponseRepresentation;
-import br.com.onboarding.anime.domain.domain.Anime;
 import br.com.onboarding.anime.domain.service.AnimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
-
-import static br.com.onboarding.anime.application.mapper.AnimeMapper.*;
 import static br.com.onboarding.anime.application.mapper.AnimeMapper.deRepresentationParaDominio;
 import static br.com.onboarding.anime.application.mapper.AnimeMapper.paraDominio;
 import static br.com.onboarding.anime.application.mapper.AnimeMapper.paraRepresentacao;
-import static java.util.Objects.*;
 import static java.util.Objects.nonNull;
-import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.http.ResponseEntity.badRequest;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.status;
+import static org.springframework.http.ResponseEntity.unprocessableEntity;
 
 @RestController
 @RequestMapping("/v1/animes")
@@ -59,7 +57,7 @@ public class AnimeController {
         if (nonNull(animeAtualizado)) {
             return ok(paraRepresentacao(anime));
         }
-        return noContent().build();
+        return unprocessableEntity().build();
     }
 
 }
