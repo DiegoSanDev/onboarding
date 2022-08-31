@@ -31,4 +31,13 @@ public class AnimeService {
         }
     }
 
+    public Anime atualizar(Anime anime) {
+        try {
+            return this.animeRepository.atualizar(anime);
+        }catch (Exception e) {
+            log.error("Erro ao tentar atualizar o anime: {}", anime, e);
+            throw e;
+        }
+    }
+
 }

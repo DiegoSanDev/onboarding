@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
+import static br.com.onboarding.anime.application.mapper.AnimeMapper.*;
+
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -21,8 +23,8 @@ public class AnimeRepositoryImpl implements AnimeRepository {
     @Override
     public Anime salvar(Anime anime) {
         try {
-            var animeEntity = animeJpa.save(AnimeMapper.paraEntity(anime));
-            return AnimeMapper.entityParaDominio(animeEntity);
+            var animeEntity = animeJpa.save(paraEntity(anime));
+            return entityParaDominio(animeEntity);
         } catch (Exception e) {
             log.error("Erro ao tentar salvar o anime. {}", anime, e);
             throw e;
@@ -34,7 +36,7 @@ public class AnimeRepositoryImpl implements AnimeRepository {
         try {
             var animeEntity = animeJpa.findById(id);
             if(animeEntity.isPresent()) {
-                return AnimeMapper.entityParaDominio(animeEntity.get());
+                return entityParaDominio(animeEntity.get());
             }
         } catch (Exception e) {
             log.error("Erro ao tentar buscar o anime. Por Id: {}", id, e);
@@ -43,4 +45,18 @@ public class AnimeRepositoryImpl implements AnimeRepository {
         return Anime.builder().build();
     }
 
+    @Override
+    public Anime atualizar(Anime anime) {
+        try {
+            var getAnimeEntity = animeJpa.findById(anime.getId());
+            if(getAnimeEntity.isPresent()) {
+                anime.setId(getAnimeEntity.get().getId());
+                return entityParaDominio(animeJpa.save(paraEntity(anime)));
+            }
+        } catch (Exception e) {
+            log.error("Erro ao tentar atulizar o anime: {}", anime, e);
+            throw e;
+        }
+        return Anime.builder().build();
+    }
 }
